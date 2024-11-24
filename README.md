@@ -84,3 +84,14 @@ python run.py --feature 4
 To make the application easier to debug, runtime configurations are provided to run each of the analyses you are implementing. When you click on the run button in the left-hand side toolbar, you can select to run one of the three analyses or run the file you are currently viewing. That makes debugging a little easier. This run configuration is specified in the `.vscode/launch.json` if you want to modify it.
 
 The `.vscode/settings.json` also customizes the VSCode user interface sligthly to make navigation and debugging easier. But that is a matter of preference and can be turned off by removing the appropriate settings.
+
+
+## Testing
+
+These commands are used to test the code.
+1) python3 -m coverage run --source=. -m unittest discover -s tests
+
+2) python3 -m coverage report --omit="test_*,example_analysis.py"
+
+3) python3 -m coverage html
+   open htmlcov/index.html
