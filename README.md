@@ -91,7 +91,7 @@ The `.vscode/settings.json` also customizes the VSCode user interface sligthly t
 These commands are used to test the code.
 1) python3 -m coverage run --source=. -m unittest discover -s tests
 
-2) python3 -m coverage report --omit="test_*"
+2) python3 -m coverage report --omit="test_*,example_analysis.py"
 
 3) python3 -m coverage html
    open htmlcov/index.html
