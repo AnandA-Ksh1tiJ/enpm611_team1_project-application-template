@@ -95,3 +95,13 @@ These commands are used to test the code.
 
 3) python3 -m coverage html
    open htmlcov/index.html
+
+
+### Analysis 1
+
+These were the scenarios where the code failed
+1) The issues list is empty, the code doesn't handle this scenario and exits abruptly.
+2) Non-integer input for user choice is not handled.
+3) Invalid user selection (name or index) is not handled.
+4) Fails when some categories in grouped_keys are empty.
+5) Fails when the selected author has no events.
