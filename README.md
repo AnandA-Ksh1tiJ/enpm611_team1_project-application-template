@@ -114,16 +114,28 @@ These were the scenarios where the code failed
 4) Fails when some categories in grouped_keys are empty.
 5) Fails when the selected author has no events.
 
+### Analysis 2
+1. Missing DataLoader Dependency
+Error: TypeError: 'NoneType' object is not callable.
+Cause: The DataLoader dependency is mocked as None, and the code does not handle this condition.
+2. Missing User Parameter
+Error: TypeError: expected str, bytes or os.PathLike object, not NoneType.
+Cause: config.get_parameter returns None, causing a failure when data_path is accessed in DataLoader.
+3. Invalid Event Type in Issue Data
+Error: AttributeError: 'str' object has no attribute 'event_type'.
+Cause: The code assumes events is a list of objects with the event_type attribute, failing when invalid data is provided.
 
 ### Analysis 3
 Summary of failures:
-1) Events having a future date are not handled
-2) For issues having mixed states, only closed issues should be analyzed, which is not the case.
+
+Events having a future date are not handled
+For issues having mixed states, only closed issues should be analyzed, which is not the case.
 
 ### Analysis 4
 Summary of failures:
-1) Failure to handle empty issues dataframe
-2) Failure to handle the case when there are no issues to analyze
-3) Failure to handle the case when all issues are missing created_date values.
-4) Failure to handle invalid created_date formats
-5) Failure to handle future created_date values.
+
+Failure to handle empty issues dataframe
+Failure to handle the case when there are no issues to analyze
+Failure to handle the case when all issues are missing created_date values.
+Failure to handle invalid created_date formats
+Failure to handle future created_date values.
