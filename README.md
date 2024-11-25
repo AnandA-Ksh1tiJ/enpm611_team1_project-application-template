@@ -84,3 +84,58 @@ python run.py --feature 4
 To make the application easier to debug, runtime configurations are provided to run each of the analyses you are implementing. When you click on the run button in the left-hand side toolbar, you can select to run one of the three analyses or run the file you are currently viewing. That makes debugging a little easier. This run configuration is specified in the `.vscode/launch.json` if you want to modify it.
 
 The `.vscode/settings.json` also customizes the VSCode user interface sligthly to make navigation and debugging easier. But that is a matter of preference and can be turned off by removing the appropriate settings.
+
+
+## Testing
+
+These commands are used to test the code.
+```
+1) python3 -m coverage run --source=. -m unittest discover -s tests
+
+2) python3 -m coverage report --omit="test_*"
+
+3) python3 -m coverage html
+   open htmlcov/index.html
+```
+### Example Analysis
+Summary of failures:
+1) Failure to handle the case when no issues are returned
+2) Failure to handle the case when issues dataframe is empty
+3) Failure to handle the case when there are no issues to analyze
+4) Failure in calculation of total events for a specific user and for all users
+
+
+### Analysis 1
+
+These were the scenarios where the code failed
+1) The issues list is empty, the code doesn't handle this scenario and exits abruptly.
+2) Non-integer input for user choice is not handled.
+3) Invalid user selection (name or index) is not handled.
+4) Fails when some categories in grouped_keys are empty.
+5) Fails when the selected author has no events.
+
+### Analysis 2
+1. Missing DataLoader Dependency
+Error: TypeError: 'NoneType' object is not callable.
+Cause: The DataLoader dependency is mocked as None, and the code does not handle this condition.
+2. Missing User Parameter
+Error: TypeError: expected str, bytes or os.PathLike object, not NoneType.
+Cause: config.get_parameter returns None, causing a failure when data_path is accessed in DataLoader.
+3. Invalid Event Type in Issue Data
+Error: AttributeError: 'str' object has no attribute 'event_type'.
+Cause: The code assumes events is a list of objects with the event_type attribute, failing when invalid data is provided.
+
+### Analysis 3
+Summary of failures:
+
+Events having a future date are not handled
+For issues having mixed states, only closed issues should be analyzed, which is not the case.
+
+### Analysis 4
+Summary of failures:
+
+Failure to handle empty issues dataframe
+Failure to handle the case when there are no issues to analyze
+Failure to handle the case when all issues are missing created_date values.
+Failure to handle invalid created_date formats
+Failure to handle future created_date values.
