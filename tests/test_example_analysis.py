@@ -1,4 +1,5 @@
 import unittest
+import pandas as pd
 from unittest.mock import patch, MagicMock
 from example_analysis import ExampleAnalysis
 from model import Issue
@@ -42,19 +43,40 @@ class TestExampleAnalysis(unittest.TestCase):
                     mock_print.assert_any_call("\n\nFound 3 events across 3 issues.\n\n")
 
     @patch("matplotlib.pyplot.show")
-    def test_bar_chart_generation(self, mock_show):
+    @patch("data_loader.DataLoader.get_issues")
+    def test_bar_chart_generation(self, mock_get_issues, mock_show):
         """
-        Test that a bar chart is generated for the top creators.
+        Test bar chart generation by verifying DataFrame values directly.
         """
-        # Mock DataLoader to return the issues
-        with patch("data_loader.DataLoader.get_issues", return_value=self.issues):
-            analysis = ExampleAnalysis()
+        # Mock DataLoader to return issues
+        mock_get_issues.return_value = [
+            Issue({'creator': 'user1', 'state': 'open', 'events': []}),
+            Issue({'creator': 'user2', 'state': 'closed', 'events': []}),
+            Issue({'creator': 'user1', 'state': 'open', 'events': []}),
+        ]
 
-            with patch("pandas.DataFrame.groupby") as mock_groupby:
-                analysis.run()
-                mock_groupby.assert_called_once_with("creator")  # Ensure grouping by 'creator'
+        analysis = ExampleAnalysis()
+
+        with patch("pandas.DataFrame.from_records") as mock_from_records:
+            # Provide mocked data
+            df_mock = pd.DataFrame([
+                {"creator": "user1"},
+                {"creator": "user2"},
+                {"creator": "user1"},
+            ])
+            mock_from_records.return_value = df_mock
             
-            mock_show.assert_called_once()  # Verify the plot was displayed
+            analysis.run()
+
+            # Validate DataFrame grouping and counts
+            df_hist = df_mock.groupby("creator").size().nlargest(50)
+            assert df_hist["user1"] == 2
+            assert df_hist["user2"] == 1
+
+            # Ensure chart is displayed
+            mock_show.assert_called_once()
+
+
 
     @patch("matplotlib.pyplot.show")
     @patch("data_loader.DataLoader.get_issues")

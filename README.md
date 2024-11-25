@@ -89,12 +89,20 @@ The `.vscode/settings.json` also customizes the VSCode user interface sligthly t
 ## Testing
 
 These commands are used to test the code.
+```
 1) python3 -m coverage run --source=. -m unittest discover -s tests
 
-2) python3 -m coverage report --omit="test_*,example_analysis.py"
+2) python3 -m coverage report --omit="test_*"
 
 3) python3 -m coverage html
    open htmlcov/index.html
+```
+### Example Analysis
+Summary of failures:
+1) Failure to handle the case when no issues are returned
+2) Failure to handle the case when issues dataframe is empty
+3) Failure to handle the case when there are no issues to analyze
+4) Failure in calculation of total events for a specific user and for all users
 
 
 ### Analysis 1
@@ -111,3 +119,11 @@ These were the scenarios where the code failed
 Summary of failures:
 1) Events having a future date are not handled
 2) For issues having mixed states, only closed issues should be analyzed, which is not the case.
+
+### Analysis 4
+Summary of failures:
+1) Failure to handle empty issues dataframe
+2) Failure to handle the case when there are no issues to analyze
+3) Failure to handle the case when all issues are missing created_date values.
+4) Failure to handle invalid created_date formats
+5) Failure to handle future created_date values.
