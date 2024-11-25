@@ -89,12 +89,20 @@ The `.vscode/settings.json` also customizes the VSCode user interface sligthly t
 ## Testing
 
 These commands are used to test the code.
+```
 1) python3 -m coverage run --source=. -m unittest discover -s tests
 
-2) python3 -m coverage report --omit="test_*,example_analysis.py"
+2) python3 -m coverage report --omit="test_*"
 
 3) python3 -m coverage html
    open htmlcov/index.html
+```
+### Example Analysis
+Summary of failures:
+1) Failure to handle the case when no issues are returned
+2) Failure to handle the case when issues dataframe is empty
+3) Failure to handle the case when there are no issues to analyze
+4) Failure in calculation of total events for a specific user and for all users
 
 
 ### Analysis 1
