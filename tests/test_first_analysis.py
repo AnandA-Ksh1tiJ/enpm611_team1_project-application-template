@@ -150,9 +150,6 @@ class TestFirstAnalysis(unittest.TestCase):
                # Verify correct selection of a valid name
                mock_print.assert_any_call("Event Author found: ", "Alice")
 
-
-
-
    @patch('data_loader.DataLoader.get_issues')
    def test_non_integer_input_handling(self, mock_get_issues):
        """
