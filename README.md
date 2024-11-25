@@ -105,3 +105,9 @@ These were the scenarios where the code failed
 3) Invalid user selection (name or index) is not handled.
 4) Fails when some categories in grouped_keys are empty.
 5) Fails when the selected author has no events.
+
+
+### Analysis 3
+Summary of failures:
+1) Events having a future date are not handled
+2) For issues having mixed states, only closed issues should be analyzed, which is not the case.
