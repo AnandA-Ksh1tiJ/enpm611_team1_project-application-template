@@ -111,3 +111,11 @@ These were the scenarios where the code failed
 Summary of failures:
 1) Events having a future date are not handled
 2) For issues having mixed states, only closed issues should be analyzed, which is not the case.
+
+### Analysis 4
+Summary of failures:
+1) Failure to handle empty issues dataframe
+2) Failure to handle the case when there are no issues to analyze
+3) Failure to handle the case when all issues are missing created_date values.
+4) Failure to handle invalid created_date formats
+5) Failure to handle future created_date values.
